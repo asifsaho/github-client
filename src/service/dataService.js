@@ -45,7 +45,7 @@ class DataService {
         const repoDataQuery = `
             query { 
               viewer {
-                repositories(last: 20) {
+                repositories(last: 100) {
                    nodes {
                      name
                      url

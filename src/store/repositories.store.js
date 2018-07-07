@@ -7,7 +7,7 @@ class Repositories {
         this.repositories = data.repositories;
     }
 
-    @action getRepoData(){
+    getRepoData(){
         return toJS(this.repositories);
     }
 }

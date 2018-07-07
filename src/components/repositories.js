@@ -12,7 +12,9 @@ export default (props) => {
             {repos.map((item, i) => <ListGroupItem key={i}>
                 <Row>
                     <Col><strong>{item.name}</strong></Col>
-                    <Col sm={3}><Button target="blank" color="secondary" href={item.url}><i className="github-icon"/> In GitHub </Button></Col>
+                    <Col sm={2}>
+                        <Button target="blank" color="secondary float-right" href={item.url}><i className="github-icon"/></Button>
+                    </Col>
                 </Row>
             </ListGroupItem>)}
         </ListGroup>

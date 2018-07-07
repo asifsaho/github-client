@@ -14,7 +14,7 @@ function goForGitHubLogin(){
             <div className="v-h-center full-height">
                 {(authService.checkLoginStatus()) ?
                     <Redirect to={{pathname: "/profile"}}/> :
-                    <Button onClick={goForGitHubLogin}><i className="github-icon"/>Login With Github</Button>}
+                    <Button onClick={goForGitHubLogin}><i className="github-icon margin-right-15"/>Login With Github</Button>}
             </div>
         )
     }
