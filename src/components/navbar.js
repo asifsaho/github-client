@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {observer} from 'mobx-react';
 import {
     Collapse,
     Navbar,
@@ -12,19 +13,13 @@ import {
     DropdownMenu,
     DropdownItem } from 'reactstrap';
 
-export default class Navigation extends React.Component {
+@observer class NavBar extends Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false
         };
-    }
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
     }
 
     logMeOut(){
@@ -36,35 +31,12 @@ export default class Navigation extends React.Component {
         return (
             <div>
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">
-                        <img src="https://placehold.it/15/15" alt=""/>Username
+                    <NavbarBrand className="v-center">
+                        <img height={20} src={this.props.profile.avatarUrl ? this.props.profile.avatarUrl : "https://placehold.it/30/30"} alt=""/>{this.props.profile.name}
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink href="/components/">Components</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-                            </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Option
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>
-                                        Logout
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        Option 2
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem>
-                                        Reset
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
                             <NavItem>
                                 <NavLink className="cursor-pointer" onClick={this.logMeOut}>Logout</NavLink>
                             </NavItem>
@@ -75,3 +47,5 @@ export default class Navigation extends React.Component {
         );
     }
 }
+
+export default NavBar;

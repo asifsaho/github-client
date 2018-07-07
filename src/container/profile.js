@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'reactstrap'
 import {observer} from 'mobx-react';
-import Navbar from "../components/navbar";
+import NavBar from "../components/navbar";
 import ProfileTabs from "../components/profileTabs";
 import ProfileCard from '../components/profileCard'
 import dataService from '../service/dataService';
@@ -15,7 +15,7 @@ import profileStore from '../store/profile.store';
     render(){
         return (
             <div className="container">
-                <Navbar/>
+                <NavBar profile={profileStore.getProfileInfo()}/>
                 <br/><br/>
                 <Row>
                     <Col sm={4}>
