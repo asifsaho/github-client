@@ -6,6 +6,7 @@ body {
 
 .space {
   margin-top: 20px;
+  overflow: hidden;
 }
 
 .v-h-center {

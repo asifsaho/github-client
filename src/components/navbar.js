@@ -7,11 +7,9 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem } from 'reactstrap';
+    NavLink
+} from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 @observer class NavBar extends Component {
     constructor(props) {
@@ -31,9 +29,11 @@ import {
         return (
             <div>
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand className="v-center">
-                        <img height={20} src={this.props.profile.avatarUrl ? this.props.profile.avatarUrl : "https://placehold.it/30/30"} alt=""/>{this.props.profile.name}
-                    </NavbarBrand>
+                    <Link to={'/'} className="v-center">
+                        <img height={20}
+                             src={this.props.profile.avatarUrl ? this.props.profile.avatarUrl : "https://placehold.it/30/30"}
+                             alt=""/>{this.props.profile.name}
+                    </Link>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>

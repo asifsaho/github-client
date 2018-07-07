@@ -3,11 +3,12 @@ import Profile from './container/profile';
 import Login from './components/login';
 import Callback from './container/callback';
 import Auth from './components/auth';
+import RepoDetails from './container/repo-details';
 
 import {
     BrowserRouter as Router,
     Route,
-    Redirect,
+    Redirect
 } from "react-router-dom";
 
 class Routes extends Component {
@@ -18,6 +19,7 @@ class Routes extends Component {
                     <div>
                         <Route exact path="/" render={() => <Redirect to={{pathname: "/login"}}/>} />
                         <Route exact path="/profile" render={() => <Auth component={Profile}/>} />
+                        <Route exact path="/repo/:name" render={() => <Auth component={RepoDetails}/>} />
                         <Route exact path="/callback" render={() => <Callback/>} />
                         <Route exact path="/login" component={Login} />
                     </div>

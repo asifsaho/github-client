@@ -1,12 +1,12 @@
-import { GraphQLClient } from 'graphql-request';
+import {GraphQLClient} from 'graphql-request';
 import profileStore from '../store/profile.store';
 import repositoriesStore from '../store/repositories.store';
 import appConfig from '../appConfig';
 import authService from "./authService";
 
 class DataService {
-    constructor(){
-        if(authService.getAccessToken()) {
+    constructor() {
+        if (authService.getAccessToken()) {
             this.client = new GraphQLClient(appConfig.dataEndpoint, {
                 headers: {
                     "Authorization": "bearer " + authService.getAccessToken().split('=')[1].split('&')[0],
@@ -15,7 +15,12 @@ class DataService {
         }
     }
 
-    getProfileData(){
+    logout() {
+        localStorage.clear();
+        window.location = '/'
+    }
+
+    getProfileData() {
         const proFileDataQuery = `
             query { 
               viewer {
@@ -39,10 +44,15 @@ class DataService {
                 console.log("User Information", data.viewer);
                 profileStore.setProfileInfo(data.viewer);
             })
-            .catch(err => console.log(err.response.errors))
+            .catch(err => {
+                if (err.response.status === 401) {
+                    this.logout();
+                }
+                console.log(err.response.errors)
+            })
     }
 
-    getRepositories(){
+    getRepositories() {
         const repoDataQuery = `
             query { 
               viewer {
@@ -61,7 +71,57 @@ class DataService {
                 console.log("Repositories", data.viewer);
                 repositoriesStore.setRepoData(data.viewer);
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err);
+
+                if (err.response.status === 401) {
+                    this.logout();
+                }
+            })
+    }
+
+
+    getSingleRepositoryDetails(repoName) {
+        const singleRepoDataQuery = `
+            query { 
+              viewer {
+               repository(name: "${repoName}") {
+                 name
+                 nameWithOwner
+                 description
+                 createdAt
+                 updatedAt
+                 defaultBranchRef {
+                   target {
+                     ... on Commit {
+                       tree {
+                         entries {
+                           name
+                         }
+                       }
+                     }
+                   }
+                 },
+                 readMe: object(expression: "master:README.md") {
+                      ... on Blob{
+                      text
+                    }
+                  }
+                }
+              }
+            }`;
+
+        this.client.request(singleRepoDataQuery)
+            .then((data) => {
+                console.log("Single Repo Data Loaded", data.viewer.repository);
+                repositoriesStore.setSingleRepoData(data.viewer.repository);
+            })
+            .catch(err => {
+                console.log(err)
+                if (err.response.status === 401) {
+                    this.logout();
+                }
+            })
     }
 }
 
