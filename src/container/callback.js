@@ -18,7 +18,7 @@ class Callback extends Component {
             url: corsProxy + 'https://github.com/login/oauth/access_token',
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Content-Type' : 'application/json'
+                'accept' : 'application/json'
             },
             data: {
                 client_id: "37e1266222ea598ab2ef",
@@ -28,7 +28,6 @@ class Callback extends Component {
         })
             .then((response) => {
                 localStorage.setItem('access_token', response.data);
-                console.log(response.data)
 
                 if(response.data.substr(0,5) === 'error') {
                     this.setState({message: 'We are sorry, something went wrong you can\'t log in, we are taking to the login page again'})

@@ -37,7 +37,7 @@ export default class Navigation extends React.Component {
             <div>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand href="/">
-                        <img src="https://placehold.it/15/15"/>Username
+                        <img src="https://placehold.it/15/15" alt=""/>Username
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import {observer} from 'mobx-react';
 import classnames from 'classnames';
 import Repositories from '../components/repositories';
 import StaredRepo from '../components/staredRepo';
 import FollowingRepo from '../components/followingRepo';
 import Followers from '../components/followers';
+import repoStore from '../store/repositories.store';
+import dataService from '../service/dataService';
 
-export default class Example extends React.Component {
+@observer class ProfileTabs extends Component {
     constructor(props) {
         super(props);
 
@@ -14,6 +17,10 @@ export default class Example extends React.Component {
         this.state = {
             activeTab: '1'
         };
+    }
+
+    componentWillMount(){
+        dataService.getRepositories();
     }
 
     toggle(tab) {
@@ -61,7 +68,7 @@ export default class Example extends React.Component {
                         <Row>
                             <Col sm="12">
                                 <div className="space"/>
-                                <Repositories/>
+                                <Repositories repos={repoStore.getRepoData()}/>
                             </Col>
                         </Row>
                     </TabPane>
@@ -101,3 +108,5 @@ export default class Example extends React.Component {
         );
     }
 }
+
+export default ProfileTabs;

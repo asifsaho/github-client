@@ -1,17 +1,19 @@
-import {action, observable} from 'mobx-react';
+import {action, observable, toJS} from 'mobx';
 
 class Profile {
     @observable profileInfo = {
+        login: '',
         name: '',
-        username: '',
-        bio: '',
-        avatar: ''
+        bio: ''
+    };
+
+    getProfileInfo(){
+        return toJS(this.profileInfo)
     }
 
-
-    @action setProfileInfo(){
-        this.profileInfo = {};
+    @action setProfileInfo(data){
+        this.profileInfo = data;
     }
 }
 
-export default Profile();
+export default new Profile();
