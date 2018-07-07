@@ -21,6 +21,7 @@ class DataService {
               viewer {
                 login
                 name
+                avatarUrl
                 bio
                 url
                 company

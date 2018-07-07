@@ -6,7 +6,7 @@ export default (props) => {
     return(
         <div>
             <Card>
-                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=300%C3%97180&w=318&h=300" alt="Card image cap" />
+                <CardImg top width="100%" src={props.profile.avatarUrl.length ? props.profile.avatarUrl : 'https://placeholdit.imgix.net/~text?txtsize=33&txt=300%C3%97180&w=318&h=300'} alt="" />
                 <CardBody>
                     <CardTitle>{props.profile.name}</CardTitle>
                     <CardSubtitle>{props.profile.login}</CardSubtitle> <br/>
