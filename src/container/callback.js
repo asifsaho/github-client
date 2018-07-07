@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import appConfig from '../appConfig';
 
 class Callback extends Component {
     constructor(){
@@ -12,25 +13,24 @@ class Callback extends Component {
 
     componentWillMount(){
         let code = window.location.search.split('code=')[1];
-        const corsProxy = 'http://localhost:5050/';
+        const proxy = appConfig.proxy ? appConfig.proxy : '';
         axios({
             method: 'post',
-            url: corsProxy + 'https://github.com/login/oauth/access_token',
+            url: proxy + appConfig.accessTokenEndPoint,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'accept' : 'application/json'
+                //'accept' : 'application/json'
             },
             data: {
-                client_id: "37e1266222ea598ab2ef",
-                client_secret: "a00382fe21cc042f631c516e3c084dfb5ae07b43",
+                client_id: appConfig.clientId,
+                client_secret: appConfig.clientSecret,
                 code: code
             }
         })
             .then((response) => {
-                localStorage.setItem('access_token', response.data);
-
                 if(response.data.substr(0,5) === 'error') {
                     this.setState({message: 'We are sorry, something went wrong you can\'t log in, we are taking to the login page again'})
+                    localStorage.clear();
                     window.location = '/login'
                 }
                 else {

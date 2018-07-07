@@ -3,9 +3,10 @@ import {Button} from 'reactstrap';
 import {Redirect} from 'react-router';
 import {observer} from 'mobx-react';
 import authService from '../service/authService';
+import appConfig from '../appConfig';
 
 function goForGitHubLogin(){
-    window.location = 'https://github.com/login/oauth/authorize?client_id=37e1266222ea598ab2ef&redirect_uri=http://localhost:3000/callback&scope=user repo'
+    window.location = `${appConfig.OAuthEndPoint}?client_id=${appConfig.clientId}&redirect_uri=${appConfig.redirectUri}&scope=user repo`;
 }
 
 @observer class Login extends Component {
