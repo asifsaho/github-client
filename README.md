@@ -39,7 +39,7 @@ export default appConfig;
 
 
 Features Developed
-=
+===================
 
 - See Profile information
 - Personal repositories including private and public and their link
