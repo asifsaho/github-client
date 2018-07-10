@@ -12,7 +12,7 @@ const StarredRepo = (props) => {
                         <Col><small className="float-right">Created On: {helpers.formatDate(repo.node.createdAt)}</small></Col>
                         <Col sm={3}>
                             <Button href={repo.node.url} target="_blank" color="secondary float-right height-34 margin-right-15">
-                                <i class="github-icon"/>
+                                <i className="github-icon"/>
                             </Button>
                         </Col>
                     </Row>
