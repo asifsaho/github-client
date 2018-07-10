@@ -38,7 +38,7 @@ export default appConfig;
 - Login with your github account.
 
 
-Features Developed
+### Features Developed
 ===================
 
 - See Profile information
