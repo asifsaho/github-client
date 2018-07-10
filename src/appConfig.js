@@ -6,6 +6,6 @@ const appConfig = {
     accessTokenEndPoint: 'https://github.com/login/oauth/access_token',
     redirectUri: 'http://localhost:3000/callback',
     proxy: 'http://localhost:5050/'
-};
+}
 
 export default appConfig;
