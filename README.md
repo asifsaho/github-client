@@ -47,4 +47,4 @@ export default appConfig;
 - Starred repository list by logged in users
 
 
-# Ceers!
+# Cheers!
