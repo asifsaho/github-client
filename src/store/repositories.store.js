@@ -2,6 +2,7 @@ import {action, observable, toJS} from 'mobx';
 
 class Repositories {
     @observable repositories = [];
+    @observable starredRepos = [];
     @observable singleRepoData = {
         name: "",
         nameWithOwner: "",
@@ -20,20 +21,28 @@ class Repositories {
         }
     };
 
-    @action setRepoData(data) {
-        this.repositories = data.repositories;
-    }
-
-    getRepoData() {
+    getMyRepos() {
         return toJS(this.repositories);
-    }
-
-    @action setSingleRepoData(data) {
-        this.singleRepoData = data;
     }
 
     getSingleRepoData() {
         return toJS(this.singleRepoData);
+    }
+
+    getStarredRepos() {
+        return toJS(this.starredRepos);
+    }
+
+    @action setRepoData(data) {
+        this.repositories = data.repositories;
+    }
+
+    @action setStarredRepo(data) {
+        this.starredRepos = data;
+    }
+
+    @action setSingleRepoData(data) {
+        this.singleRepoData = data;
     }
 }
 

@@ -123,6 +123,37 @@ class DataService {
                 }
             })
     }
+
+
+    getStarredRepository() {
+        const updateDescriptionQuery = `
+            query { 
+              viewer { 
+                starredRepositories(first: 20) {
+                  edges {
+                    node {
+                      name
+                      createdAt
+                      descriptionHTML
+                      url
+                    }
+                  }
+                }
+              }
+            }`;
+
+        this.client.request(updateDescriptionQuery)
+            .then((data) => {
+                console.log("Starred Repos", data.viewer.starredRepositories.edges);
+                repositoriesStore.setStarredRepo(data.viewer.starredRepositories.edges);
+            })
+            .catch(err => {
+                console.log(err);
+                if (err.response.status === 401) {
+                    this.logout();
+                }
+            })
+    }
 }
 
 

@@ -4,7 +4,6 @@ import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     NavLink
@@ -29,7 +28,7 @@ import {Link} from 'react-router-dom';
         return (
             <div>
                 <Navbar color="light" light expand="md">
-                    <Link to={'/'} className="v-center">
+                    <Link to={'/'} className="v-center navbar-brand">
                         <img height={20}
                              src={this.props.profile.avatarUrl ? this.props.profile.avatarUrl : "https://placehold.it/30/30"}
                              alt=""/>{this.props.profile.name}

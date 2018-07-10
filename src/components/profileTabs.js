@@ -4,8 +4,6 @@ import {observer} from 'mobx-react';
 import classnames from 'classnames';
 import Repositories from '../components/repositories';
 import StaredRepo from '../components/staredRepo';
-import FollowingRepo from '../components/followingRepo';
-import Followers from '../components/followers';
 import repoStore from '../store/repositories.store';
 import dataService from '../service/dataService';
 
@@ -21,6 +19,7 @@ import dataService from '../service/dataService';
 
     componentWillMount(){
         dataService.getRepositories();
+        dataService.getStarredRepository();
     }
 
     toggle(tab) {
@@ -48,27 +47,13 @@ import dataService from '../service/dataService';
                             Stars
                         </NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '3' })}
-                            onClick={() => { this.toggle('3'); }}>
-                            Following
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '4' })}
-                            onClick={() => { this.toggle('4'); }}>
-                            Followers
-                        </NavLink>
-                    </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
                         <Row>
                             <Col sm="12">
                                 <div className="space"/>
-                                <Repositories repos={repoStore.getRepoData()}/>
+                                <Repositories repos={repoStore.getMyRepos()}/>
                             </Col>
                         </Row>
                     </TabPane>
@@ -79,27 +64,7 @@ import dataService from '../service/dataService';
                         <Row>
                             <Col sm="12">
                                 <div className="space"/>
-                                <StaredRepo/>
-                            </Col>
-                        </Row>
-                    </TabPane>
-                </TabContent>
-                <TabContent activeTab={this.state.activeTab}>
-                    <TabPane tabId="3">
-                        <Row>
-                            <Col sm="12">
-                                <div className="space"/>
-                                <FollowingRepo/>
-                            </Col>
-                        </Row>
-                    </TabPane>
-                </TabContent>
-                <TabContent activeTab={this.state.activeTab}>
-                    <TabPane tabId="4">
-                        <Row>
-                            <Col sm="12">
-                                <div className="space"/>
-                                <Followers/>
+                                <StaredRepo repos={repoStore.getStarredRepos()}/>
                             </Col>
                         </Row>
                     </TabPane>

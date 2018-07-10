@@ -1,92 +1,90 @@
 import React from 'react';
-import {Table} from 'reactstrap';
+import {Table, Button, Row, Col, FormGroup, Input} from 'reactstrap';
 import _ from 'lodash';
+import classNames from 'classnames';
 
-export default (props) => {
-    return (
-        <div>
-            <div className="space"/>
-            <div className="space"/>
+class RepositoryFilesTable extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            descriptionField: '',
+            descriptionEditMood: false
+        }
+    }
 
-            <h3>{props.singleRepoDetails.name}</h3>
-            <p>Description: {props.singleRepoDetails.description}</p>
-            <p>Updated at: {props.singleRepoDetails.updatedAt}</p>
+    descriptionEditMoodOn = () => {
+        this.setState({
+            descriptionField: this.props.singleRepoDetails.description,
+            descriptionEditMood: true
+        })
+    }
 
-            <div className="space"/>
-            <div className="space"/>
+    descriptionEditUpdate = () => {
+        this.setState({
+            descriptionEditMood: false
+        })
+    }
 
-            <Table>
-                <thead>
-                <tr>
-                    <th>Files and Folders</th>
-                </tr>
-                </thead>
-                <tbody>
-                {props.singleRepoDetails.defaultBranchRef.target.tree.entries.map((file, index) => (
-                    <tr key={index}>
-                        <td>{file.name}</td>
+    render() {
+        return (
+            <div>
+                <div className="space"/>
+                <div className="space"/>
+
+                <Row>
+                    <Col>
+                        <h3>{this.props.singleRepoDetails.nameWithOwner}</h3>
+
+                        <p className={classNames({hide: this.state.descriptionEditMood})}>
+                            Description: {this.props.singleRepoDetails.description}
+                            <a onClick={this.descriptionEditMoodOn} className="edit cursor-pointer">Edit</a>
+                        </p>
+                        <FormGroup className={classNames({hide: !this.state.descriptionEditMood})}>
+                            <Input type="textarea" value={this.state.descriptionField}
+                                   onChange={(event) => this.setState({descriptionField: event.target.value})}
+                                   placeholder="Repo Description Goes Here"/>
+                            <div className="space"/>
+                            <Button onClick={this.descriptionEditUpdate}>Update Description</Button>
+                        </FormGroup>
+
+                        <div className="space"/>
+
+                        <p>Updated at: {this.props.singleRepoDetails.updatedAt}</p>
+                    </Col>
+                </Row>
+
+                <div className="space"/>
+
+                <div className="space"/>
+
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>Files and Folders</th>
                     </tr>
-                ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                    {(_.get(this.props, 'singleRepoDetails.defaultBranchRef.target.tree.entries')) ?
+                        <FilesRow files={this.props.singleRepoDetails.defaultBranchRef.target.tree.entries}/> : <tr/>}
+                    </tbody>
+                </Table>
 
-            <h4>{_.get(props.singleRepoDetails, 'readMe.text') ? "readme.md" : ""}</h4>
-            <p>{_.get(props, 'singleRepoDetails.readMe.text')}</p>
-        </div>
-    );
+                <h4>{_.get(this.props.singleRepoDetails, 'readMe.text') ? "readme.md" : ""}</h4>
+                <p>{_.get(this.props, 'singleRepoDetails.readMe.text')}</p>
+            </div>
+        )
+    }
 }
 
+export default RepositoryFilesTable;
 
-// import React, { Component } from 'react';
-// import { Table } from 'reactstrap';
-//
-// export default class RepositoryFilesTable extends Component {
-//     componentDidMount(){
-//         console.log('Single Repo Details', this.props.repoDetails);
-//     }
-//
-//     render() {
-//         return (
-//             <div>
-//                 <div className="space"/>
-//                 <div className="space"/>
-//
-//                 <h3>Europass CV HTML</h3>
-//
-//                 <div className="space"/>
-//                 <div className="space"/>
-//
-//                 <p>Latest commit 48ewfioj434 on 13 May</p>
-//                 <Table>
-//                     <thead>
-//                     <tr>
-//                         <th>Files and Folders</th>
-//                         <th>Commit</th>
-//                         <th>Last Commit</th>
-//                     </tr>
-//                     </thead>
-//                     <tbody>
-//                     <tr>
-//                         <td>Mark</td>
-//                         <td>Otto</td>
-//                         <td>@mdo</td>
-//                     </tr>
-//                     <tr>
-//                         <td>Jacob</td>
-//                         <td>Thornton</td>
-//                         <td>@fat</td>
-//                     </tr>
-//                     <tr>
-//                         <td>Larry</td>
-//                         <td>the Bird</td>
-//                         <td>@twitter</td>
-//                     </tr>
-//                     </tbody>
-//                 </Table>
-//
-//                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet ducimus enim illo laboriosam pariatur, quidem similique ut voluptatibus. Aspernatur, atque dolorum ex ipsam non quam quas quisquam quo quod sed!</p>
-//                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet ducimus enim illo laboriosam pariatur, quidem similique ut voluptatibus. Aspernatur, atque dolorum ex ipsam non quam quas quisquam quo quod sed!</p>
-//             </div>
-//         );
-//     }
-// }
+
+const FilesRow = (props) => {
+    return(
+        props.files.map((file, index) => (
+            <tr key={index}>
+                <td>{file.name}</td>
+            </tr>
+        ))
+    )
+}

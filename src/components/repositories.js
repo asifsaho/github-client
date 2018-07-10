@@ -15,9 +15,12 @@ export default (props) => {
                     <Col>
                         <Link to={"/repo/" + item.name}><strong>{item.name}</strong></Link>
                     </Col>
-                    <Col sm={2}>
+                    <Col sm={4}>
                         <Button target="blank" color="secondary float-right" href={item.url}>
                             <i className="github-icon"/>
+                        </Button>
+                        <Button target="_blank" color="secondary float-right height-34 margin-right-15">
+                            <Link to={"/repo/" + item.name}><i className="details-icon"/></Link>
                         </Button>
                     </Col>
                 </Row>

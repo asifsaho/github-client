@@ -7,7 +7,7 @@ class Callback extends Component {
         super();
 
         this.state = {
-            message: 'Please wait while we are taking you to the mysterious island!'
+            message: 'Please wait ...'
         }
     }
 
@@ -19,7 +19,6 @@ class Callback extends Component {
             url: proxy + appConfig.accessTokenEndPoint,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                //'accept' : 'application/json'
             },
             data: {
                 client_id: appConfig.clientId,
@@ -35,9 +34,7 @@ class Callback extends Component {
                 }
                 else {
                     localStorage.setItem('access_token', response.data);
-                    setTimeout(function(){
-                        window.location = '/profile'
-                    }, 1000)
+                    window.location = '/profile'
                 }
             })
             .catch(err => console.log(err))
